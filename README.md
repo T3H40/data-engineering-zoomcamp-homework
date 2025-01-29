@@ -84,7 +84,10 @@ pip 24.3.1 from /usr/local/lib/python3.12/site-packages/pip (python 3.12)
 ```
 
 ### Homework Q2
-Port is 5433, hosted on postgres container, so `postgres:5433`
+Port 5433 is for accessing the internal container network from the host machine, whereas 5432 is the internal port.
+The machine is listed as `db` in the compose file, together with `postgres` as a container name. Either is valid to address the container.
+
+Therefor, both `postgres:5432` and `db:5432` are valid answers.
 
 ### Homework Q3
 To collect all trips matching the requirements, we use the following query:
