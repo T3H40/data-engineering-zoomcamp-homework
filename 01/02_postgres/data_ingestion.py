@@ -76,7 +76,7 @@ if __name__ == '__main__':
     main()
 
 """
-python data-engineering-zoomcamp-homework/01_02_postgres/data_ingestion.py \
+python data-engineering-zoomcamp-homework/01/02_postgres/data_ingestion.py \
     --user=root \
     --password=root \
     --host=localhost \
@@ -85,7 +85,7 @@ python data-engineering-zoomcamp-homework/01_02_postgres/data_ingestion.py \
     --table=nyc_green_tripdata \
     --url=https://github.com/DataTalksClub/nyc-tlc-data/releases/download/green/green_tripdata_2019-10.csv.gz
 
-python data-engineering-zoomcamp-homework/01_02_postgres/data_ingestion.py \
+python data-engineering-zoomcamp-homework/01/02_postgres/data_ingestion.py \
     --user=root \
     --password=root \
     --host=localhost \
