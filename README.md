@@ -71,7 +71,20 @@ root@localhost:ny_taxi>
 ```
 Success :) 
 
-Now, load the data into the databae. See the data_ingestion.ipynb notebook.
+Now, load the data into the database. To do so, you can run `data_ingestion.py`, somewhat like this:
+```
+python data-engineering-zoomcamp-homework/01/02_postgres/data_ingestion.py \
+    --user=root \
+    --password=root \
+    --host=localhost \
+    --port=5432 \
+    --db=ny_taxi \
+    --table=nyc_green_tripdata \
+    --url=https://github.com/DataTalksClub/nyc-tlc-data/releases/download/green/green_tripdata_2019-10.csv.gz
+```
+
+### Docker
+The provided Dockerfile can be used to create a container image for data ingestion. It will run the python script mentioned above and try to insert thee content into the configured database.
 
 
 ### Homework Q1
@@ -92,14 +105,36 @@ Therefor, both `postgres:5432` and `db:5432` are valid answers.
 ### Homework Q3
 To collect all trips matching the requirements, we use the following query:
 ```
-SELECT COUNT(*) FROM nyc_green_tripdata WHERE Trip_distance <= 1
-SELECT COUNT(*) FROM nyc_green_tripdata WHERE Trip_distance > 1 AND Trip_distance <= 3
-SELECT COUNT(*) FROM nyc_green_tripdata WHERE Trip_distance > 3 AND Trip_distance <= 7
-SELECT COUNT(*) FROM nyc_green_tripdata WHERE Trip_distance > 7 AND Trip_distance <= 10
-SELECT COUNT(*) FROM nyc_green_tripdata WHERE Trip_distance < 10
+SELECT
+    CASE
+        WHEN trip_distance <= 1 THEN 'Up to 1 mile'
+        WHEN trip_distance > 1 AND trip_distance <= 3 THEN '1~3 miles'
+        WHEN trip_distance > 3 AND trip_distance <= 7 THEN '3~7 miles'
+        WHEN trip_distance > 7 AND trip_distance <= 10 THEN '7~10 miles'
+        ELSE '10+ miles'
+    END AS segment,
+    to_char(COUNT(1), '999,999') AS num_trips
+FROM
+    nyc_green_tripdata
+WHERE
+    lpep_pickup_datetime >= '2019-10-01'
+    AND lpep_pickup_datetime < '2019-11-01'
+    AND lpep_dropoff_datetime >= '2019-10-01'
+    AND lpep_dropoff_datetime < '2019-11-01'
+GROUP BY
+    segment
 ```
 We get the following counts:
-`104838,199013,109645,27688,35202` 
+```
+"10+ miles"     | "  35,189"
+"1~3 miles"	    | " 198,924"
+"3~7 miles"	    | " 109,603"
+"7~10 miles"    | "  27,678"
+"Up to 1 mile"	| " 104,802"
+```
+Explanation: We analyse every line in the table, we then create an output column called `segment`, that we fill with a value based on the trip_distance of each row using `CASE`.
+
+The second column of our output is called `num_trips` which we format using `to_char()`. The content of that column will be `COUNT(1)` since we count the number of rows. The `1` acts as filler to give `COUNT` something to count. We could have used any column name instead without a noticable difference.
 
 ### Homework Q4
 To find the longest trip we run the following query:
@@ -124,16 +159,16 @@ JOIN
 WHERE 
   lpep_pickup_datetime >= '2019-10-18'::date AND lpep_pickup_datetime < '2019-10-19'::date 
 GROUP BY "Zone" 
-ORDER BY cnt DESC
+ORDER BY t DESC
 ```
 
 Which outputs:
 ```
-| Zone                                | cnt  | total              |
-|-------------------------------------+------+--------------------|
-| East Harlem North                   | 1236 | 18686.680000000084 |
-| East Harlem South                   | 1101 | 16797.260000000053 |
+"East Harlem North"   |	1236 | 18686.680000000084
+"East Harlem South"	  | 1101 | 16797.26000000006
+"Morningside Heights" |	764  | 13029.790000000025
 ```
+Notice, that we order by the sum of `total_amount`, as we define the "largest" region as most generated revenue.
 
 ### Homework Q6
 
