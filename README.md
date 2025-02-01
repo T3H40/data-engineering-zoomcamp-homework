@@ -86,6 +86,24 @@ python data-engineering-zoomcamp-homework/01/02_postgres/data_ingestion.py \
 ### Docker
 The provided Dockerfile can be used to create a container image for data ingestion. It will run the python script mentioned above and try to insert thee content into the configured database.
 
+Helpful commands:
+```bash
+docker ps                         # list running containers
+docker kill abc123                # kills running container
+docker build -t someimage:1.2.3 . # builds image from Dockerfile
+docker run -it someimage:1.2.3    # starts a new container running someimage interactively
+```
+
+You can go ahead and orchestrate multiple containers by creating a docer-compose file.
+The `services:` section will hold all containers to spool up.  
+All containers you define will automatically be placed within a network.
+
+Use `docker compose up` to run your composition in your current directory, or, you can pass a path to a docker-compose file elsewhere usinf `-f`. The `-d` flag will run in detached mode.
+
+Use `docker compose down`to gracefully shutdown.
+
+### Handy tips
+- Run `python -m http.server` to run a simple http server on the fly from your current directory
 
 ### Homework Q1
 Run Dockers Python container, start off with bash,
