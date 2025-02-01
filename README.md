@@ -151,6 +151,8 @@ terraform apply
 to see wether the desired changes would be done and to actually apply them if happy.
 This will create a `terraform.tfstate` file, containing various bits of state info on your infrastructure.
 
+If you make changes to the terraform file, run `terraform fmt` to auto-format your configuration.
+
 Once done, you can run `terraform destroy` to remove all created resources again.
 
 ### Homework Q1
