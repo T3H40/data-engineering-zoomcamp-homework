@@ -105,6 +105,42 @@ Use `docker compose down`to gracefully shutdown.
 ### Handy tips
 - Run `python -m http.server` to run a simple http server on the fly from your current directory
 
+### Terraform
+Infrastructure as code. Helps setting up (and tearing down!) systems for use.
+
+You can define providers for differnet clouds to access.  
+
+Important commands are:
+```bash
+terraform init    # Get the selected cloud provider
+terraform plan    # Shows the steps that are going to be followed / ressoures created
+terraform apply   # perform actions defined in .tf file
+terraform destroy # remove what is defined in .tf file
+```
+
+First, we need to create means of authentication for terraform. For GCP this boils down to:
+- Go to IAM & Admin > Service Accounts
+- Create new Service Account
+  - Name: "terraform runner"
+  - Access Roles (Add as needed but limit as much as possible):
+    - Cloud Storage > Storage Admin (for creating a bucket)
+    - BigQuery > Big Query Admin (for creating a BigQuery dataset)
+    - Compute Engine > Compute Admin (for creating instances)
+- Create access Key to use the new service account:
+  - Go to Service Accounts > Our Service Account > ... > Manage Keys
+  - Add Key > Create new Key (JSON)
+  - The private(!!!) key file will be downloaded
+
+This json credential file can be used in the project from here on out.
+
+Next, we setup a project. For the project we
+- Create subfolder "keys" and store our certificate
+- Create a `main.tf` file for terraform
+- You can copy the base usage code from the, e.g.: https://registry.terraform.io/providers/hashicorp/google/latest/docs
+- You can find the project id by going to Cloud Overview > Dashboard in the Google Cloud burger menu 
+
+
+
 ### Homework Q1
 Run Dockers Python container, start off with bash,
 then check pip version:
