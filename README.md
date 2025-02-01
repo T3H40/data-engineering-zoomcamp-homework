@@ -139,7 +139,19 @@ Next, we setup a project. For the project we
 - You can copy the base usage code from the, e.g.: https://registry.terraform.io/providers/hashicorp/google/latest/docs
 - You can find the project id by going to Cloud Overview > Dashboard in the Google Cloud burger menu 
 
+The `main.tf` file contains your connection setup, cou cann now run
+```bash
+terraform init
+```
+to initialize the connection and run the commands
+```bash
+terraform plan
+terraform apply
+```
+to see wether the desired changes would be done and to actually apply them if happy.
+This will create a `terraform.tfstate` file, containing various bits of state info on your infrastructure.
 
+Once done, you can run `terraform destroy` to remove all created resources again.
 
 ### Homework Q1
 Run Dockers Python container, start off with bash,
