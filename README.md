@@ -180,6 +180,15 @@ You can also add variable content to your infrastructure definition, which, by c
   - Forward port `8888` if you want to open the jupyter notebook in the course data
 - Finally, ingest the desired data using the cripts and means created before.
 
+### Setup GitHub codeaspace
+VMs can also be hosted in GitHub codespaces, with a free tier.
+- Install GitHub codespaces extension in your local VS Code
+- Go to https://github.com/codespaces and create new
+- Select your repository and machine details
+
+This is it already. It will open a web version of VS Code on the new machine. You can select "Open in VS Code Desktop", to connect using your local instance of VS Code.
+
+
 
 ### Homework Q1
 Run Dockers Python container, start off with bash,
