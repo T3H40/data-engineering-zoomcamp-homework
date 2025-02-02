@@ -155,6 +155,32 @@ If you make changes to the terraform file, run `terraform fmt` to auto-format yo
 
 Once done, you can run `terraform destroy` to remove all created resources again.
 
+You can also add variable content to your infrastructure definition, which, by convention, is stored in a `variables.tf`
+
+### Tool-setup for Google Cloud (or any remote machine)
+- Create a new Ubuntu VM in the Google Cloud web dashboard
+- Update apt `sudo apt-get update`
+- Download and install docker `sudo apt-get install docker.io`
+- From within your home directory:
+  - Download and install anaconda: https://repo.anaconda.com/archive/Anaconda3-2024.10-1-Linux-x86_64.s
+  - source `.bashrc`. There will be `(base)` within the commandline string, hinting at a working anaconda installation.
+  - clone https://github.com/DataTalksClub/data-engineering-zoomcamp.git
+  - Add user to `docker` group to run docker without sudo https://docs.docker.com/engine/install/linux-postinstall/
+  - Install docker-compose https://docs.docker.com/compose/install/linux/
+  - Install `pgcli`: `conda install -c conda-forge pgcli`
+  - Install `mycli` to make it run: `pip install -U mycli`
+  - Install terraform https://askubuntu.com/questions/983351/how-to-install-terraform-in-ubuntu  
+  - Copy google cloud credentials json to the remote host
+  - Run the basic docker composition in week1 in the course data (pgadmin and pgdatabase)
+
+- In your local VS Code, setup access to the remote databse:
+  - Click on `PORTS` in the terminal window
+  - Forward port `5432` from the remote host to the local host to access the database
+  - Forward port `8080` to access pgadmin
+  - Forward port `8888` if you want to open the jupyter notebook in the course data
+- Finally, ingest the desired data using the cripts and means created before.
+
+
 ### Homework Q1
 Run Dockers Python container, start off with bash,
 then check pip version:
