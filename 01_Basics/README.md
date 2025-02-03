@@ -1,18 +1,4 @@
-# Module 1
-
-## Using the ingestion Dockerfile
-
-Create a docker container `docker build -t postgres-ingest:0.0.1 .`.  
-This creates a container with the given ingestion script. Now we can run it:
-
-```
-docker run -v=/Users/tsiebeneichler/Downloads/zoomcamp/data:/data --network=pg-network postgres-ingest:0.0.1 --host=db --table=nyc_green_tripdata --url=https://github.com/DataTalksClub/nyc-tlc-data/releases/download/green/green_tripdata_2019-10.csv.gz --db=ny_taxi
-
-docker run -v=/Users/tsiebeneichler/Downloads/zoomcamp/data:/data --network=pg-network postgres-ingest:0.0.1 --host=db --table=taxi_zone_lookup --url=https://github.com/DataTalksClub/nyc-tlc-data/releases/download/misc/taxi_zone_lookup.csv --db=ny_taxi
-Downloading from URL: https://github.com/DataTalksClub/nyc-tlc-data/releases/download/misc/taxi_zone_lookup.csv
-```
-
-## Module 1 - Setup
+# Module 1 - Setup
 Test that the docker engine setup works:
 ```bash
 docker run hello-world
@@ -90,7 +76,7 @@ python data-engineering-zoomcamp-homework/01/02_postgres/data_ingestion.py \
     --url=https://github.com/DataTalksClub/nyc-tlc-data/releases/download/green/green_tripdata_2019-10.csv.gz
 ```
 
-### Docker
+## Docker
 The provided Dockerfile can be used to create a container image for data ingestion. It will run the python script mentioned above and try to insert thee content into the configured database.
 
 Helpful commands:
@@ -109,10 +95,10 @@ Use `docker compose up` to run your composition in your current directory, or, y
 
 Use `docker compose down`to gracefully shutdown.
 
-### Handy tips
+## Handy tips
 - Run `python -m http.server` to run a simple http server on the fly from your current directory
 
-### Terraform
+## Terraform
 Infrastructure as code. Helps setting up (and tearing down!) systems for use.
 
 You can define providers for differnet clouds to access.  
@@ -164,7 +150,7 @@ Once done, you can run `terraform destroy` to remove all created resources again
 
 You can also add variable content to your infrastructure definition, which, by convention, is stored in a `variables.tf`
 
-### Tool-setup for Google Cloud (or any remote machine)
+## Tool-setup for Google Cloud (or any remote machine)
 - Create a new Ubuntu VM in the Google Cloud web dashboard
 - Update apt `sudo apt-get update`
 - Download and install docker `sudo apt-get install docker.io`
@@ -187,7 +173,7 @@ You can also add variable content to your infrastructure definition, which, by c
   - Forward port `8888` if you want to open the jupyter notebook in the course data
 - Finally, ingest the desired data using the cripts and means created before.
 
-### Setup GitHub codeaspace
+## Setup GitHub codeaspace
 VMs can also be hosted in GitHub codespaces, with a free tier.
 - Install GitHub codespaces extension in your local VS Code
 - Go to https://github.com/codespaces and create new
@@ -197,7 +183,7 @@ This is it already. It will open a web version of VS Code on the new machine. Yo
 
 
 
-### Homework Q1
+## Homework Q1
 Run Dockers Python container, start off with bash,
 then check pip version:
 ```
@@ -206,13 +192,13 @@ root@8b0515083b93:/# pip --version
 pip 24.3.1 from /usr/local/lib/python3.12/site-packages/pip (python 3.12)
 ```
 
-### Homework Q2
+## Homework Q2
 Port 5433 is for accessing the internal container network from the host machine, whereas 5432 is the internal port.
 The machine is listed as `db` in the compose file, together with `postgres` as a container name. Either is valid to address the container.
 
 Therefor, both `postgres:5432` and `db:5432` are valid answers.
 
-### Homework Q3
+## Homework Q3
 To collect all trips matching the requirements, we use the following query:
 ```
 SELECT
@@ -246,7 +232,7 @@ Explanation: We analyse every line in the table, we then create an output column
 
 The second column of our output is called `num_trips` which we format using `to_char()`. The content of that column will be `COUNT(1)` since we count the number of rows. The `1` acts as filler to give `COUNT` something to count. We could have used any column name instead without a noticable difference.
 
-### Homework Q4
+## Homework Q4
 To find the longest trip we run the following query:
 ```
 SELECT lpep_pickup_datetime, MAX(Trip_distance) as mx 
@@ -257,7 +243,7 @@ LIMIT 1
 ```
 Which returns `2019-10-31` 
 
-### Homework Q5
+## Homework Q5
 To find the requested Areas, we run the following query:
 ```
 SELECT 
@@ -280,7 +266,7 @@ Which outputs:
 ```
 Notice, that we order by the sum of `total_amount`, as we define the "largest" region as most generated revenue.
 
-### Homework Q6
+## Homework Q6
 
 To find the longest trip, we run:
 ```
