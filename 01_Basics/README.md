@@ -87,11 +87,11 @@ docker build -t someimage:1.2.3 . # builds image from Dockerfile
 docker run -it someimage:1.2.3    # starts a new container running someimage interactively
 ```
 
-You can go ahead and orchestrate multiple containers by creating a docer-compose file.
+You can go ahead and orchestrate multiple containers by creating a docker-compose file.
 The `services:` section will hold all containers to spool up.  
 All containers you define will automatically be placed within a network.
 
-Use `docker compose up` to run your composition in your current directory, or, you can pass a path to a docker-compose file elsewhere usinf `-f`. The `-d` flag will run in detached mode.
+Use `docker compose up` to run your composition in your current directory, or, you can pass a path to a docker-compose file elsewhere using `-f`. The `-d` flag will run in detached mode.
 
 Use `docker compose down`to gracefully shutdown.
 
